@@ -19,9 +19,20 @@ public class ActorController : Photon.PunBehaviour
     void AssignVoiceToCharacter(int index)
     {
         Debug.Log("PLACING AT " + index);
+        playerVoice.GetComponent<AudioSource>().volume = 1;
         characters[index].AttachCharacter(playerVoice);
     }
 
+    public void Mute()
+    {
+        photonView.RPC("MuteVoice", PhotonTargets.All);
+    }
+
+    [PunRPC]
+    public void MuteVoice()
+    {
+        playerVoice.GetComponent<AudioSource>().volume = 0;
+    }
 
     public void GiveItemWithIndex(int index)
     {
