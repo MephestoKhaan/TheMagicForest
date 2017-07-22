@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
-public class CharacterVoicer : MonoBehaviour {
+public class CharacterVoicer : MonoBehaviour
+{
+    public AudioMixerGroup mixerGroup;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void AttachCharacter(GameObject character)
+    {
+        character.GetComponent<AudioSource>().outputAudioMixerGroup = mixerGroup;
+        character.transform.position = this.transform.position;
+    }
 }
