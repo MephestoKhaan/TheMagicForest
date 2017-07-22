@@ -5,11 +5,11 @@ using UnityEngine.Audio;
 
 public class CharacterVoicer : MonoBehaviour
 {
-    public AudioMixerGroup mixerGroup;
+    public int AudioMixerGroupIndex;
 
     public void AttachCharacter(GameObject character)
     {
-        character.GetComponent<AudioSource>().outputAudioMixerGroup = mixerGroup;
+        character.GetComponent<VoiceChanger>().ChangeMixer(AudioMixerGroupIndex);
         character.transform.position = this.transform.position;
     }
 }

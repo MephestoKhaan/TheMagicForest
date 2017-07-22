@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class ActorSpawner : OnJoinedInstantiate
 {
-    public delegate void OnCharacterInstantiated(GameObject character);
+    public delegate void ActorSpawnerInstantiated(GameObject character);
 
-    public static event OnCharacterInstantiated CharacterInstantiated;
+    public static event ActorSpawnerInstantiated CharacterInstantiated;
 
     public new void OnJoinedRoom()
     {
-        if(PhotonNetwork.isMasterClient)
-        {
-            return;
-        }
-
-        if (this.PrefabsToInstantiate != null)
-        {
             GameObject o = PrefabsToInstantiate[0];
             
             o = PhotonNetwork.Instantiate(o.name, Vector3.zero, Quaternion.identity, 0);
@@ -24,7 +17,6 @@ public class ActorSpawner : OnJoinedInstantiate
             {
                 CharacterInstantiated(o);
             }
-        }
     }
 }
     

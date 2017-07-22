@@ -7,32 +7,46 @@ public class ActorController : Photon.PunBehaviour
     public CharacterVoicer[] characters;
     public GameObject[] masks;
 
+
     public GameObject playerVoice;
+
+    private void OnEnable()
+    {
+        ActorSpawner.CharacterInstantiated += CharacterInstantiation_CharacterInstantiated;
+    }
+
+    private void OnDisable()
+    {
+        ActorSpawner.CharacterInstantiated -= CharacterInstantiation_CharacterInstantiated;
+    }
+
+
+    private void CharacterInstantiation_CharacterInstantiated(GameObject character)
+    {
+        playerVoice = character;
+        PhotonVoiceRecorder rec = character.GetComponent<PhotonVoiceRecorder>();
+        rec.enabled = true;
+    }
+
 
     public void PlaceVoiceAtCharacter(int index)
     {
-        photonView.RPC("AssignVoiceToCharacter", PhotonTargets.All, index);
-        
-    }
+        if (playerVoice != null)
+        {
+            playerVoice.GetComponent<PhotonVoiceRecorder>().Detect = true;
+            characters[index].AttachCharacter(playerVoice);
+        }
 
-    [PunRPC]
-    void AssignVoiceToCharacter(int index)
-    {
-        Debug.Log("PLACING AT " + index);
-        playerVoice.GetComponent<AudioSource>().volume = 1;
-        characters[index].AttachCharacter(playerVoice);
     }
-
+    
     public void Mute()
     {
-        photonView.RPC("MuteVoice", PhotonTargets.All);
+        if (playerVoice != null)
+        {
+            playerVoice.GetComponent<PhotonVoiceRecorder>().Detect = false;
+        }
     }
-
-    [PunRPC]
-    public void MuteVoice()
-    {
-        playerVoice.GetComponent<AudioSource>().volume = 0;
-    }
+    
 
     public void GiveItemWithIndex(int index)
     {
@@ -41,17 +55,12 @@ public class ActorController : Photon.PunBehaviour
 
     public void RetireAllItems()
     {
-        photonView.RPC("RetireItems", PhotonTargets.All);
-    }
-
-    [PunRPC]
-    void RetireItems()
-    {
-        for(int i = 0; i < masks.Length; i++)
+        for (int i = 0; i < 3; i++)
         {
-            ActivateItemWithIndex(i, false);
+            photonView.RPC("ActivateItemWithIndex", PhotonTargets.All, i, false);
         }
     }
+    
 
 
     [PunRPC]
