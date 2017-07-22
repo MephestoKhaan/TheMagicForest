@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheMagicForest.Plugins", "TheMagicForest.Plugins.csproj", "{D1E58F6F-4A63-DB5A-8AE0-D2EC46331E66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheMagicForest", "TheMagicForest.csproj", "{4BCD8757-29B2-B37A-5270-F345F68734AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheMagicForest.Editor", "TheMagicForest.Editor.csproj", "{F96AA0BE-7195-8C50-F44B-82B36A5BFA30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1E58F6F-4A63-DB5A-8AE0-D2EC46331E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E58F6F-4A63-DB5A-8AE0-D2EC46331E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E58F6F-4A63-DB5A-8AE0-D2EC46331E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E58F6F-4A63-DB5A-8AE0-D2EC46331E66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BCD8757-29B2-B37A-5270-F345F68734AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BCD8757-29B2-B37A-5270-F345F68734AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BCD8757-29B2-B37A-5270-F345F68734AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BCD8757-29B2-B37A-5270-F345F68734AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F96AA0BE-7195-8C50-F44B-82B36A5BFA30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F96AA0BE-7195-8C50-F44B-82B36A5BFA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F96AA0BE-7195-8C50-F44B-82B36A5BFA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F96AA0BE-7195-8C50-F44B-82B36A5BFA30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
