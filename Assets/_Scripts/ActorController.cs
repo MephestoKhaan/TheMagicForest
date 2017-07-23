@@ -60,8 +60,6 @@ public class ActorController : Photon.PunBehaviour
             photonView.RPC("ActivateItemWithIndex", PhotonTargets.All, i, false);
         }
     }
-    
-
 
     [PunRPC]
     void ActivateItemWithIndex(int index, bool activate)
@@ -73,6 +71,18 @@ public class ActorController : Photon.PunBehaviour
             masks[index].GetComponent<MeshRenderer>().enabled = !activate;
             masks[index].GetComponent<Collider>().enabled = activate;
         }
+    }
+
+
+    public void SetMask(int index)
+    {
+        MaskSwapper maskHeadset = FindObjectOfType<MaskSwapper>();
+
+        if(maskHeadset != null)
+        {
+            maskHeadset.ChangeFace(index);
+        }
+
     }
     
 }
