@@ -12,7 +12,7 @@ The Magic forest is a narrative driven experience that mixes VR and theatre!
 You (the player) have to reach the centre of the lake. In order to do so the 3 aquardians of the lake will ask you very personal questions that reveal your true self.
 If you answer them with honesty they will allow you to advance to the next aquardian. Once in the centre the fountain of truth will reveal your true self depending on your answers!
 
-![Aquardian of strength](https://media.giphy.com/media/xTkcEQfoQqT0vcD1V6/giphy.gif)
+![Aquardian of strength](https://media.giphy.com/media/xUn3CoZwC4leHdsGnS/giphy.gif)
 
 ![Fountain of truth](https://media.giphy.com/media/3o8dFpxpajbIKCeCbe/giphy.gif)
 
@@ -40,7 +40,7 @@ Run in the editor, or in a standalone build the `TestVoice` scene using an HTCVi
 ## Who made this project?
 This project was created during the Future Artists VR event during a workday and a half by:
 
-  - @kayleighsmyth96 3D art using Tilt-brush
-  - @QueerMediaUK Voice acting and character design
-  - @videosmithery story design
-  - @LucaMefisto (myself) original tech idea and programming
+  - [@kayleighsmyth96](https://twitter.com/kayleighsmyth96) 3D art using Tilt-brush
+  - [@QueerMediaUK](https://twitter.com/QueerMediaUK) Voice acting and character design
+  - [@videosmithery](https://twitter.com/videosmithery) story design
+  - [@LucaMefisto](https://twitter.com/LucaMefisto) (myself) original tech idea and programming
