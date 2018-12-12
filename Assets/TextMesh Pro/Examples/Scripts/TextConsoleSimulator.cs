@@ -72,7 +72,7 @@ namespace TMPro.Examples
 
                 visibleCount += 1;
 
-                yield return new WaitForSeconds(0.0f);
+                yield return null;
             }
         }
 

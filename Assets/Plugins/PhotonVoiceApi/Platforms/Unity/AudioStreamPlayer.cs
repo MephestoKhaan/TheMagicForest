@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.Voice;
 
-public class AudioStreamPlayer
+public class AudioStreamPlayer : IAudioOut
 {
     // fast forward if we are more than this value before desired position (stream pos - playDelaySamples)
     const int maxPlayLagMs = 100;
@@ -11,9 +11,11 @@ public class AudioStreamPlayer
     // buffering by playing few samples back
     private int playDelaySamples;
 
-    private int frameSize = 0;
-    private int frameSamples = 0;
-    private int streamSamplePos = 0;
+    private int bufferSamples;
+    private int channels;
+    private int frameSize;
+    private int frameSamples;
+    private int streamSamplePos;
 
     /// <summary>Smoothed difference between (jittering) stream and (clock-driven) player.</summary>
     public int CurrentBufferLag { get; private set; }
@@ -38,42 +40,38 @@ public class AudioStreamPlayer
     // non-wrapped play position
     private int playSamplePos
     {
-        get { return this.source.clip != null ? this.playLoopCount * this.source.clip.samples + this.source.timeSamples : 0; }
+        get { return this.source.clip != null ? this.playLoopCount * this.bufferSamples + this.source.timeSamples : 0; }
         set
         {
             if (this.source.clip != null)
             {
                 // if negative value is passed (possible when playback starts?), loop count is < 0 and sample position is positive
-                var pos = value % this.source.clip.samples;
+                var pos = value % this.bufferSamples;
                 if (pos < 0)
                 {
-                    pos += this.source.clip.samples;
+                    pos += this.bufferSamples;
                 }
                 this.source.timeSamples = pos;
-                this.playLoopCount = value / this.source.clip.samples;
+                this.playLoopCount = value / this.bufferSamples;
                 this.sourceTimeSamplesPrev = this.source.timeSamples;
             }
 
         }
     }
-    private int sourceTimeSamplesPrev = 0;
-    private int playLoopCount = 0;
+    private int sourceTimeSamplesPrev;
+    private int playLoopCount;
 
     public bool IsPlaying
     {
         get { return this.source.isPlaying; }
     }
 
-    public bool IsStarted
-    {
-        get { return this.source.clip != null; }
-    }
-
     public void Start(int frequency, int channels, int frameSamples, int playDelayMs)
     {
 
-        int bufferSamples = (maxPlayLagMs + playDelayMs) * frequency / 1000 + frameSamples + frequency; // frame + max delay + 1 sec. just in case
-        
+        this.bufferSamples = (maxPlayLagMs + playDelayMs) * frequency / 1000 + frameSamples + frequency; // frame + max delay + 1 sec. just in case
+
+        this.channels = channels;
         this.frameSamples = frameSamples;
         this.frameSize = frameSamples * channels;
 
@@ -100,10 +98,10 @@ public class AudioStreamPlayer
 
     Queue<float[]> frameQueue = new Queue<float[]>();
     public const int FRAME_POOL_CAPACITY = 50;
-    ExitGames.Client.Photon.Voice.PrimitiveArrayPool<float> framePool = new ExitGames.Client.Photon.Voice.PrimitiveArrayPool<float>(FRAME_POOL_CAPACITY, "AudioStreamPlayer");
+    PrimitiveArrayPool<float> framePool = new PrimitiveArrayPool<float>(FRAME_POOL_CAPACITY, "AudioStreamPlayer");
 
     // should be called in Update thread
-    public void Update()
+    public void Service()
     {
         if (this.source.clip != null)
         {
@@ -112,9 +110,9 @@ public class AudioStreamPlayer
                 while (frameQueue.Count > 0)
                 {
                     var frame = frameQueue.Dequeue();
-                    this.source.clip.SetData(frame, this.streamSamplePos % this.source.clip.samples);
+                    this.source.clip.SetData(frame, this.streamSamplePos % this.bufferSamples);
                     framePool.Release(frame);
-                    this.streamSamplePos += frame.Length / this.source.clip.channels;
+                    this.streamSamplePos += frame.Length / this.channels;
                 }
             }
             // loop detection (pcmsetpositioncallback not called when clip loops)
@@ -132,7 +130,7 @@ public class AudioStreamPlayer
             // average jittering value
             this.CurrentBufferLag = (this.CurrentBufferLag * 39 + (this.streamSamplePos - playPos)) / 40;
 
-            // calc jitter-free stream position based on clock-driven palyer position and average lag
+            // calc jitter-free stream position based on clock-driven player position and average lag
             this.streamSamplePosAvg = playPos + this.CurrentBufferLag;
             if (this.streamSamplePosAvg > this.streamSamplePos)
             {

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheMagicForest.Plugins", "TheMagicForest.Plugins.csproj", "{D1E58F6F-4A63-DB5A-8AE0-D2EC46331E66}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheMagicForest", "TheMagicForest.csproj", "{4BCD8757-29B2-B37A-5270-F345F68734AF}"

@@ -16,6 +16,9 @@ namespace ExitGames.Demos.DemoPunVoice {
 
     using UnityEngine;
     using UnityEngine.UI;
+#if !UNITY_EDITOR && UNITY_PS4
+    using Sony.NP;
+#endif
 
     public class VoiceDemoUI : MonoBehaviour {
         [SerializeField]
@@ -248,6 +251,14 @@ namespace ExitGames.Demos.DemoPunVoice {
                     }
                 }
             }
+
+#if !UNITY_EDITOR && UNITY_PS4
+            UserProfiles.LocalUsers localUsers = new UserProfiles.LocalUsers();
+            UserProfiles.GetLocalUsers(localUsers);
+            int userID = localUsers.LocalUsersIds[0].UserId.Id;
+
+            PhotonVoiceSettings.Instance.PS4UserID = userID;
+#endif
         }
 
         private void PunSwitchOnClick() {
